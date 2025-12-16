@@ -1,0 +1,24 @@
+Vivado Simulator v2025.1.0
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/Xilinx/2025.1/Vivado/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_vpu_core_behav xil_defaultlib.tb_vpu_core xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4100] "C:/Users/tiffa/Documents/RPI/VPU_Research/VPU_NexysA7/VPU_NexysA7.srcs/sim_1/new/tb_vpu_core.sv" Line 4. Module tb_vpu_core has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "C:/Users/tiffa/Documents/RPI/VPU_Research/VPU_NexysA7/VPU_NexysA7.srcs/sim_1/new/tb_vpu_core.sv" Line 4. Module tb_vpu_core has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "C:/Users/tiffa/Documents/RPI/VPU_Research/VPU_NexysA7/VPU_NexysA7.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "C:/Users/tiffa/Documents/RPI/VPU_Research/VPU_NexysA7/VPU_NexysA7.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package xil_defaultlib.formats
+Compiling module xil_defaultlib.scratchpad
+Compiling module xil_defaultlib.sparsity_mask
+Compiling module xil_defaultlib.lane_i8
+Compiling module xil_defaultlib.vpu_core_default
+Compiling module xil_defaultlib.vpu_top
+Compiling module xil_defaultlib.tb_vpu_core
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_vpu_core_behav

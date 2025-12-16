@@ -1,0 +1,18 @@
+Time resolution is 1 ps
+mem[0][0]=03020100 (expect 03020100-ish)
+mem[0][16]=06040200 (expect 06040200-ish)
+ACCEPT: vl=16 (0x10) srcA=0 srcB=16 dst=32
+idx=0 wordA=03020100 wordB=06040200 y=00 03 06 09
+idx=4 wordA=07060504 wordB=0e0c0a08 y=0c 0f 12 15
+idx=8 wordA=0b0a0908 wordB=16141210 y=18 1b 1e 21
+idx=12 wordA=0f0e0d0c wordB=1e1c1a18 y=24 27 2a 2d
+DST[32]=09060300
+DST[33]=15120f0c
+DST[34]=211e1b18
+DST[35]=2d2a2724
+EXP0=09060300
+EXP1=15120f0c
+EXP2=211e1b18
+EXP3=2d2a2724
+TB PASS: VADD_I8 correct for VL=16, LANES=4
+$finish called at time : 3345 ns : File "C:/Users/tiffa/Documents/RPI/VPU_Research/VPU_NexysA7/VPU_NexysA7.srcs/sim_1/new/tb_vpu_core.sv" Line 210
