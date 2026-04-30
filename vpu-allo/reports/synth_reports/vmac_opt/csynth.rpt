@@ -1,0 +1,155 @@
+
+
+================================================================
+== Synthesis Summary Report of 'vmac_i8'
+================================================================
++ General Information: 
+    * Date:           Thu Apr 30 15:53:46 2026
+    * Version:        2025.1 (Build 6135595 on May 21 2025)
+    * Project:        proj
+    * Solution:       solution1 (Vivado IP Flow Target)
+    * Product family: artix7
+    * Target device:  xc7a100t-csg324-1
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +-------------------------------------+------+------+---------+---------+----------+---------+------+----------+------+--------+----------+-----------+-----+
+    |               Modules               | Issue|      |      Latency      | Iteration|         | Trip |          |      |        |          |           |     |
+    |               & Loops               | Type | Slack| (cycles)|   (ns)  |  Latency | Interval| Count| Pipelined| BRAM |   DSP  |    FF    |    LUT    | URAM|
+    +-------------------------------------+------+------+---------+---------+----------+---------+------+----------+------+--------+----------+-----------+-----+
+    |+ vmac_i8                            |     -|  1.68|       34|  340.000|         -|       35|     -|        no|     -|  4 (1%)|  42 (~0%)|  359 (~0%)|    -|
+    | + vmac_i8_Pipeline_VITIS_LOOP_24_1  |     -|  1.68|       18|  180.000|         -|       17|     -|    rewind|     -|       -|   7 (~0%)|   54 (~0%)|    -|
+    |  o VITIS_LOOP_24_1                  |     -|  7.30|       16|  160.000|         1|        1|    16|       yes|     -|       -|         -|          -|    -|
+    | + vmac_i8_Pipeline_l_S_i_0_i_outer  |     -|  2.40|       13|  130.000|         -|       10|     -|    rewind|     -|  4 (1%)|  29 (~0%)|  214 (~0%)|    -|
+    |  o l_S_i_0_i_outer                  |    II|  7.30|       11|  110.000|         6|        2|     4|       yes|     -|       -|         -|          -|    -|
+    +-------------------------------------+------+------+---------+---------+----------+---------+------+----------+------+--------+----------+-----------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* AP_MEMORY
++-------------+-----------+----------+
+| Port        | Direction | Bitwidth |
++-------------+-----------+----------+
+| v0_address0 | out       | 4        |
+| v0_address1 | out       | 4        |
+| v0_q0       | in        | 8        |
+| v0_q1       | in        | 8        |
+| v1_address0 | out       | 4        |
+| v1_address1 | out       | 4        |
+| v1_q0       | in        | 8        |
+| v1_q1       | in        | 8        |
+| v2_address0 | out       | 4        |
+| v2_address1 | out       | 4        |
+| v2_q0       | in        | 32       |
+| v2_q1       | in        | 32       |
+| v3_address0 | out       | 4        |
+| v3_address1 | out       | 4        |
+| v3_d0       | out       | 32       |
+| v3_d1       | out       | 32       |
++-------------+-----------+----------+
+
+* TOP LEVEL CONTROL
++-----------+------------+-----------------------------------+
+| Interface | Type       | Ports                             |
++-----------+------------+-----------------------------------+
+| ap_clk    | clock      | ap_clk                            |
+| ap_rst    | reset      | ap_rst                            |
+| ap_ctrl   | ap_ctrl_hs | ap_done ap_idle ap_ready ap_start |
++-----------+------------+-----------------------------------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+--------------+
+| Argument | Direction | Datatype     |
++----------+-----------+--------------+
+| v0       | in        | signed char* |
+| v1       | in        | signed char* |
+| v2       | in        | int*         |
+| v3       | out       | int*         |
++----------+-----------+--------------+
+
+* SW-to-HW Mapping
++----------+--------------+---------+----------+
+| Argument | HW Interface | HW Type | HW Usage |
++----------+--------------+---------+----------+
+| v0       | v0_address0  | port    | offset   |
+| v0       | v0_ce0       | port    |          |
+| v0       | v0_q0        | port    |          |
+| v0       | v0_address1  | port    | offset   |
+| v0       | v0_ce1       | port    |          |
+| v0       | v0_q1        | port    |          |
+| v1       | v1_address0  | port    | offset   |
+| v1       | v1_ce0       | port    |          |
+| v1       | v1_q0        | port    |          |
+| v1       | v1_address1  | port    | offset   |
+| v1       | v1_ce1       | port    |          |
+| v1       | v1_q1        | port    |          |
+| v2       | v2_address0  | port    | offset   |
+| v2       | v2_ce0       | port    |          |
+| v2       | v2_q0        | port    |          |
+| v2       | v2_address1  | port    | offset   |
+| v2       | v2_ce1       | port    |          |
+| v2       | v2_q1        | port    |          |
+| v3       | v3_address0  | port    | offset   |
+| v3       | v3_ce0       | port    |          |
+| v3       | v3_we0       | port    |          |
+| v3       | v3_d0        | port    |          |
+| v3       | v3_address1  | port    | offset   |
+| v3       | v3_ce1       | port    |          |
+| v3       | v3_we1       | port    |          |
+| v3       | v3_d1        | port    |          |
++----------+--------------+---------+----------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++-------------------------------------+-----+--------+-------------+-------+-----------+---------+
+| Name                                | DSP | Pragma | Variable    | Op    | Impl      | Latency |
++-------------------------------------+-----+--------+-------------+-------+-----------+---------+
+| + vmac_i8                           | 4   |        |             |       |           |         |
+|  + vmac_i8_Pipeline_VITIS_LOOP_24_1 | 0   |        |             |       |           |         |
+|    icmp_ln24_fu_58_p2               |     |        | icmp_ln24   | seteq | auto      | 0       |
+|    add_ln24_fu_64_p2                |     |        | add_ln24    | add   | fabric    | 0       |
+|  + vmac_i8_Pipeline_l_S_i_0_i_outer | 4   |        |             |       |           |         |
+|    icmp_ln27_fu_232_p2              |     |        | icmp_ln27   | seteq | auto      | 0       |
+|    add_ln27_fu_238_p2               |     |        | add_ln27    | add   | fabric    | 0       |
+|    mac_muladd_8s_8s_32s_32_4_1_U2   | 1   |        | mul_ln45    | mul   | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U2   | 1   |        | sext_ln49   | sext  | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U2   | 1   |        | v23         | add   | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U3   | 1   |        | mul_ln45_1  | mul   | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U3   | 1   |        | sext_ln49_1 | sext  | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U3   | 1   |        | v23_1       | add   | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U4   | 1   |        | mul_ln45_2  | mul   | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U4   | 1   |        | sext_ln49_2 | sext  | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U4   | 1   |        | v23_2       | add   | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U5   | 1   |        | mul_ln45_3  | mul   | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U5   | 1   |        | sext_ln49_3 | sext  | dsp_slice | 3       |
+|    mac_muladd_8s_8s_32s_32_4_1_U5   | 1   |        | v23_3       | add   | dsp_slice | 3       |
++-------------------------------------+-----+--------+-------------+-------+-----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
+  No bind storage info in design
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++----------+---------+----------------------------------------------------+
+| Type     | Options | Location                                           |
++----------+---------+----------------------------------------------------+
+| PIPELINE | ii=1    | ../../../sim/hls_output/vmac_opt.cpp:28 in vmac_i8 |
+| UNROLL   |         | ../../../sim/hls_output/vmac_opt.cpp:30 in vmac_i8 |
++----------+---------+----------------------------------------------------+
+
+

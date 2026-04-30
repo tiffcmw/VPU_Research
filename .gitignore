@@ -1,1 +1,10 @@
 /dfx_runtime.txt
+vpu-allo/.pytest_cache
+vpu-allo/kernels/__pycache__
+vpu-allo/logs
+vpu-allo/models/__pycache__
+vpu-allo/reports/synth_reports/**/proj
+vpu-allo/schedules/__pycache__
+vpu-allo/tests/__pycache__
+vpu-allo/run_hls.bat
+vpu-allo/run_all.py

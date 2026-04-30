@@ -1,0 +1,132 @@
+{
+  "vadd": {
+    "baseline": {
+      "func": "vadd_i8",
+      "latency": 39,
+      "interval": 40,
+      "dsp": 0,
+      "ff": 26,
+      "lut": 207,
+      "bram": 0,
+      "loop_ii": null,
+      "loop_latency": null,
+      "found": true
+    },
+    "opt": {
+      "func": "vadd_i8",
+      "latency": 31,
+      "interval": 32,
+      "dsp": 0,
+      "ff": 32,
+      "lut": 346,
+      "bram": 0,
+      "loop_ii": 2,
+      "loop_latency": 3,
+      "found": true
+    }
+  },
+  "vmac": {
+    "baseline": {
+      "func": "vmac_i8",
+      "latency": 42,
+      "interval": 43,
+      "dsp": 1,
+      "ff": 96,
+      "lut": 224,
+      "bram": 0,
+      "loop_ii": null,
+      "loop_latency": null,
+      "found": true
+    },
+    "opt": {
+      "func": "vmac_i8",
+      "latency": 34,
+      "interval": 35,
+      "dsp": 4,
+      "ff": 42,
+      "lut": 359,
+      "bram": 0,
+      "loop_ii": 2,
+      "loop_latency": 6,
+      "found": true
+    }
+  },
+  "linear": {
+    "baseline": {
+      "func": "linear_i8",
+      "latency": 91,
+      "interval": 92,
+      "dsp": 9,
+      "ff": 685,
+      "lut": 964,
+      "bram": 0,
+      "loop_ii": 8,
+      "loop_latency": 15,
+      "found": true
+    },
+    "opt": {
+      "func": "linear_i8",
+      "latency": 148,
+      "interval": 149,
+      "dsp": 1,
+      "ff": 267,
+      "lut": 424,
+      "bram": 0,
+      "loop_ii": null,
+      "loop_latency": null,
+      "found": true
+    }
+  },
+  "relu": {
+    "baseline": {
+      "func": "relu_i8",
+      "latency": 39,
+      "interval": 40,
+      "dsp": 0,
+      "ff": 26,
+      "lut": 207,
+      "bram": 0,
+      "loop_ii": null,
+      "loop_latency": null,
+      "found": true
+    },
+    "opt": {
+      "func": "relu_i8",
+      "latency": 31,
+      "interval": 32,
+      "dsp": 0,
+      "ff": 32,
+      "lut": 320,
+      "bram": 0,
+      "loop_ii": 2,
+      "loop_latency": 3,
+      "found": true
+    }
+  },
+  "linear_relu": {
+    "baseline": {
+      "func": "linear_relu_i8",
+      "latency": 93,
+      "interval": 94,
+      "dsp": 8,
+      "ff": 644,
+      "lut": 1031,
+      "bram": 0,
+      "loop_ii": 8,
+      "loop_latency": 17,
+      "found": true
+    },
+    "opt": {
+      "func": "linear_relu_i8",
+      "latency": 149,
+      "interval": 150,
+      "dsp": 1,
+      "ff": 276,
+      "lut": 470,
+      "bram": 0,
+      "loop_ii": null,
+      "loop_latency": null,
+      "found": true
+    }
+  }
+}

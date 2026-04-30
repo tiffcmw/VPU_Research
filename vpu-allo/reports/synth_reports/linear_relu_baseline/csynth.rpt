@@ -1,0 +1,162 @@
+
+
+================================================================
+== Synthesis Summary Report of 'linear_relu_i8'
+================================================================
++ General Information: 
+    * Date:           Thu Apr 30 15:50:04 2026
+    * Version:        2025.1 (Build 6135595 on May 21 2025)
+    * Project:        proj
+    * Solution:       solution1 (Vivado IP Flow Target)
+    * Product family: artix7
+    * Target device:  xc7a100t-csg324-1
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +--------------------------------------------+------+------+---------+---------+----------+---------+------+----------+------+--------+-----------+-----------+-----+
+    |                   Modules                  | Issue|      |      Latency      | Iteration|         | Trip |          |      |        |           |           |     |
+    |                   & Loops                  | Type | Slack| (cycles)|   (ns)  |  Latency | Interval| Count| Pipelined| BRAM |   DSP  |     FF    |    LUT    | URAM|
+    +--------------------------------------------+------+------+---------+---------+----------+---------+------+----------+------+--------+-----------+-----------+-----+
+    |+ linear_relu_i8                            |     -|  0.56|       93|  930.000|         -|       94|     -|        no|     -|  8 (3%)|  644 (~0%)|  1031 (1%)|    -|
+    | + linear_relu_i8_Pipeline_VITIS_LOOP_23_1  |     -|  1.76|       10|  100.000|         -|        9|     -|    rewind|     -|       -|    6 (~0%)|   53 (~0%)|    -|
+    |  o VITIS_LOOP_23_1                         |     -|  7.30|        8|   80.000|         1|        1|     8|       yes|     -|       -|          -|          -|    -|
+    | + linear_relu_i8_Pipeline_l_S_i_0_i        |     -|  0.56|       74|  740.000|         -|       72|     -|    rewind|     -|  8 (3%)|  498 (~0%)|   807 (1%)|    -|
+    |  o l_S_i_0_i                               |    II|  7.30|       72|  720.000|        17|        8|     8|       yes|     -|       -|          -|          -|    -|
+    +--------------------------------------------+------+------+---------+---------+----------+---------+------+----------+------+--------+-----------+-----------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* AP_MEMORY
++-------------+-----------+----------+
+| Port        | Direction | Bitwidth |
++-------------+-----------+----------+
+| v0_address0 | out       | 7        |
+| v0_address1 | out       | 7        |
+| v0_q0       | in        | 8        |
+| v0_q1       | in        | 8        |
+| v1_address0 | out       | 4        |
+| v1_address1 | out       | 4        |
+| v1_q0       | in        | 8        |
+| v1_q1       | in        | 8        |
+| v2_address0 | out       | 3        |
+| v2_d0       | out       | 8        |
++-------------+-----------+----------+
+
+* TOP LEVEL CONTROL
++-----------+------------+-----------------------------------+
+| Interface | Type       | Ports                             |
++-----------+------------+-----------------------------------+
+| ap_clk    | clock      | ap_clk                            |
+| ap_rst    | reset      | ap_rst                            |
+| ap_ctrl   | ap_ctrl_hs | ap_done ap_idle ap_ready ap_start |
++-----------+------------+-----------------------------------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+--------------+
+| Argument | Direction | Datatype     |
++----------+-----------+--------------+
+| v0       | in        | signed char* |
+| v1       | in        | signed char* |
+| v2       | out       | signed char* |
++----------+-----------+--------------+
+
+* SW-to-HW Mapping
++----------+--------------+---------+----------+
+| Argument | HW Interface | HW Type | HW Usage |
++----------+--------------+---------+----------+
+| v0       | v0_address0  | port    | offset   |
+| v0       | v0_ce0       | port    |          |
+| v0       | v0_q0        | port    |          |
+| v0       | v0_address1  | port    | offset   |
+| v0       | v0_ce1       | port    |          |
+| v0       | v0_q1        | port    |          |
+| v1       | v1_address0  | port    | offset   |
+| v1       | v1_ce0       | port    |          |
+| v1       | v1_q0        | port    |          |
+| v1       | v1_address1  | port    | offset   |
+| v1       | v1_ce1       | port    |          |
+| v1       | v1_q1        | port    |          |
+| v2       | v2_address0  | port    | offset   |
+| v2       | v2_ce0       | port    |          |
+| v2       | v2_we0       | port    |          |
+| v2       | v2_d0        | port    |          |
++----------+--------------+---------+----------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++--------------------------------------------+-----+--------+--------------+--------+-----------+---------+
+| Name                                       | DSP | Pragma | Variable     | Op     | Impl      | Latency |
++--------------------------------------------+-----+--------+--------------+--------+-----------+---------+
+| + linear_relu_i8                           | 8   |        |              |        |           |         |
+|  + linear_relu_i8_Pipeline_VITIS_LOOP_23_1 | 0   |        |              |        |           |         |
+|    icmp_ln23_fu_60_p2                      |     |        | icmp_ln23    | seteq  | auto      | 0       |
+|    add_ln23_fu_66_p2                       |     |        | add_ln23     | add    | fabric    | 0       |
+|  + linear_relu_i8_Pipeline_l_S_i_0_i       | 8   |        |              |        |           |         |
+|    icmp_ln26_fu_456_p2                     |     |        | icmp_ln26    | seteq  | auto      | 0       |
+|    add_ln26_fu_462_p2                      |     |        | add_ln26     | add    | fabric    | 0       |
+|    mul_8s_8s_16_1_1_U2                     |     |        | mul_ln47     | mul    | auto      | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U17         | 1   |        | mul_ln47_1   | mul    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U17         | 1   |        | sext_ln47_1  | sext   | dsp_slice | 3       |
+|    mul_8s_8s_16_1_1_U3                     |     |        | mul_ln47_2   | mul    | auto      | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U10         | 1   |        | mul_ln47_3   | mul    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U10         | 1   |        | sext_ln47_3  | sext   | dsp_slice | 3       |
+|    mul_8s_8s_16_1_1_U4                     |     |        | mul_ln47_4   | mul    | auto      | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U11         | 1   |        | mul_ln47_5   | mul    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U11         | 1   |        | sext_ln47_5  | sext   | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U13         | 1   |        | mul_ln47_6   | mul    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U13         | 1   |        | sext_ln47_6  | sext   | dsp_slice | 3       |
+|    mul_8s_8s_16_1_1_U5                     |     |        | mul_ln47_7   | mul    | auto      | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U14         | 1   |        | mul_ln47_8   | mul    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U14         | 1   |        | sext_ln47_8  | sext   | dsp_slice | 3       |
+|    mul_8s_8s_16_1_1_U6                     |     |        | mul_ln47_9   | mul    | auto      | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U15         | 1   |        | mul_ln47_10  | mul    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U15         | 1   |        | sext_ln47_10 | sext   | dsp_slice | 3       |
+|    mul_8s_8s_16_1_1_U7                     |     |        | mul_ln47_11  | mul    | auto      | 0       |
+|    mul_8s_8s_16_1_1_U8                     |     |        | mul_ln47_12  | mul    | auto      | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U16         | 1   |        | mul_ln47_13  | mul    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U16         | 1   |        | sext_ln47_13 | sext   | dsp_slice | 3       |
+|    mul_8s_8s_16_1_1_U9                     |     |        | mul_ln47_14  | mul    | auto      | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U12         | 1   |        | mul_ln42     | mul    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U12         | 1   |        | sext_ln47_14 | sext   | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U16         | 1   |        | add_ln47     | add    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U15         | 1   |        | add_ln47_1   | add    | dsp_slice | 3       |
+|    add_ln47_2_fu_833_p2                    |     |        | add_ln47_2   | add    | fabric    | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U13         | 1   |        | add_ln47_3   | add    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U14         | 1   |        | add_ln47_4   | add    | dsp_slice | 3       |
+|    add_ln47_5_fu_797_p2                    |     |        | add_ln47_5   | add    | fabric    | 0       |
+|    add_ln47_6_fu_846_p2                    |     |        | add_ln47_6   | add    | fabric    | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U17         | 1   |        | add_ln47_7   | add    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U10         | 1   |        | add_ln47_8   | add    | dsp_slice | 3       |
+|    add_ln47_9_fu_858_p2                    |     |        | add_ln47_9   | add    | fabric    | 0       |
+|    mac_muladd_8s_8s_16s_17_4_1_U11         | 1   |        | add_ln47_10  | add    | dsp_slice | 3       |
+|    mac_muladd_8s_8s_16s_17_4_1_U12         | 1   |        | add_ln47_11  | add    | dsp_slice | 3       |
+|    add_ln47_12_fu_752_p2                   |     |        | add_ln47_12  | add    | fabric    | 0       |
+|    add_ln47_13_fu_871_p2                   |     |        | add_ln47_13  | add    | fabric    | 0       |
+|    add_ln47_14_fu_883_p2                   |     |        | add_ln47_14  | add    | fabric    | 0       |
+|    v22_fu_887_p2                           |     |        | v22          | add    | fabric    | 0       |
+|    icmp_ln200_fu_903_p2                    |     |        | icmp_ln200   | setgt  | auto      | 0       |
+|    v24_fu_909_p3                           |     |        | v24          | select | auto_sel  | 0       |
+|    v30_fu_929_p3                           |     |        | v30          | select | auto_sel  | 0       |
++--------------------------------------------+-----+--------+--------------+--------+-----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
+  No bind storage info in design
+
+================================================================
+== Pragma Report
+================================================================
+  No pragmas found
+

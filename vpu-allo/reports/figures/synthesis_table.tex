@@ -1,0 +1,26 @@
+\begin{table}[h]
+\centering
+\caption{Vitis HLS 2025.1 synthesis results on xc7a100tcsg324-1 (Nexys A7 Artix-7 100T). Clock period 10\,ns (100\,MHz). II = initiation interval of the innermost pipelined loop.}
+\label{tab:synthesis}
+\begin{tabular}{llrrrrrr}
+\toprule
+Kernel & Schedule & Latency (cyc) & Interval & Loop II & DSP & FF & LUT \\
+\midrule
+\texttt{vadd_i8} & baseline & 39 & 40 & --- & 0 & 26 & 207 \\
+\texttt{vadd_i8} & opt & 31 & 32 & 2 & 0 & 32 & 346 \\
+\midrule
+\texttt{vmac_i8} & baseline & 42 & 43 & --- & 1 & 96 & 224 \\
+\texttt{vmac_i8} & opt & 34 & 35 & 2 & 4 & 42 & 359 \\
+\midrule
+\texttt{linear_i8} & baseline & 91 & 92 & 8 & 9 & 685 & 964 \\
+\texttt{linear_i8} & opt & 148 & 149 & --- & 1 & 267 & 424 \\
+\midrule
+\texttt{relu_i8} & baseline & 39 & 40 & --- & 0 & 26 & 207 \\
+\texttt{relu_i8} & opt & 31 & 32 & 2 & 0 & 32 & 320 \\
+\midrule
+\texttt{linear_relu} & baseline & 93 & 94 & 8 & 8 & 644 & 1,031 \\
+\texttt{linear_relu} & opt & 149 & 150 & --- & 1 & 276 & 470 \\
+
+\bottomrule
+\end{tabular}
+\end{table}
