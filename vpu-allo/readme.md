@@ -22,7 +22,7 @@ Synthesis was run on all 10 HLS designs (5 kernels × 2 schedules) targeting `xc
 
 **SIMD kernels** (vadd, vmac, relu): the `split(4) → unroll(inner) → pipeline(outer)` schedule reduces latency by 1.21–1.26× with II=1 on the outer loop.
 
-**Linear-layer kernels**: the `buffer_at + pipeline(k)` schedule is *slower* at these small dimensions (M=8, K=16) because the HLS tool already auto-unrolls the baseline into a fully-parallel 9-DSP multiply tree. The optimised schedule serialises this into a single-DSP pipelined accumulator — a 9× DSP reduction at the cost of 1.63× higher latency. This tradeoff reverses at larger dimensions where DSP budget becomes the binding constraint (primary motivation for VCU128 migration).
+**Linear-layer kernels**: the `buffer_at + pipeline(k)` schedule is *slower* at these small dimensions (M=8, K=16) because the HLS tool already auto-unrolls the baseline into a fully-parallel 9-DSP multiply tree. The optimised schedule serialises this into a single-DSP pipelined accumulator, a 9× DSP reduction at the cost of 1.63× higher latency. This tradeoff reverses at larger dimensions where DSP budget becomes the binding constraint (primary motivation for VCU128 migration).
 
 **Fused vs. unfused linear+ReLU**: fusion adds only 2 cycles (2.2%) and reduces DSP by 1 slice, confirming that kernel fusion is effective at this scale.
 
@@ -113,8 +113,8 @@ vpu_allo/
 │   │   └── linear_relu_opt/
 │   └── figures/                    # (generated) fig1–fig5 PNGs + synthesis_data.json
 │
-├── run_2.py                        # runs step 1-3 in quick start (runs in docker env)
-└── run_1.py                        # runs step 4-5 in quick start (runs in powershell)
+├── run_1.py                        # runs step 1-3 in quick start (runs in docker env)
+└── run_2.py                        # runs step 4-5 in quick start (runs in powershell)
 ```
 
 ---
