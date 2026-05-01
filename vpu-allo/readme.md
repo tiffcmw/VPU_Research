@@ -1,6 +1,6 @@
 # VPU Allo — AI Workload Accelerator (Spring 2026)
 
-Continuation of the Fall 2025 VPU research ([tiffcmw/VPU_Research](https://github.com/tiffcmw/VPU_Research)).
+Continuation of the Fall 2025 VPU research ([vpu-rtl](../vpu-rtl/)).
 
 **Fall 2025:** hand-written SystemVerilog VPU core, VADD\_I8 validated (VL=16, LANES=4) in Vivado XSim.
 
@@ -28,35 +28,35 @@ Synthesis was run on all 10 HLS designs (5 kernels × 2 schedules) targeting `xc
 
 <div align="center">
 
-<table>
-  <tr>
-    <td align="center">
+<table style="border-collapse: collapse; border: none;">
+  <tr style="border: none;">
+    <td align="center" style="border: none;">
       <img src="reports/figures/fig1_latency.png" height="250"><br>
       <b>Latency Comparison</b>
     </td>
-    <td align="center">
+    <td align="center" style="border: none;">
       <img src="reports/figures/fig2_speedup.png" height="250"><br>
       <b>Speedup Factor</b>
     </td>
   </tr>
 </table>
 
-<br>
+<br><br>
 
-<table>
-  <tr>
-    <td align="center">
+<table style="border-collapse: collapse; border: none;">
+  <tr style="border: none;">
+    <td align="center" style="border: none;">
       <img src="reports/figures/fig1_latency.png" height="250"><br>
       <b>Resource utilisation (DSP / FF / LUT)</b>
     </td>
-    <td align="center">
+    <td align="center" style="border: none;">
       <img src="reports/figures/fig3_resources.png" height="250"><br>
       <b>DSP % of device</b>
     </td>
   </tr>
 </table>
 
-<br>
+<br><br>
 
 <img src="reports/figures/fig5_design_space.png" height="250"><br>
 <b>Design Space</b>
@@ -89,21 +89,17 @@ vpu_allo/
 ├── sim/
 │   ├── generate_hls.py             # Generates HLS C++ for all kernels × schedules
 │   ├── tb_driver.py                # Generates scratchpad preload .txt / .mem files
-│   ├── hls_output/                 # (generated) 10 HLS C++ files
-│   ├── vivado_projects/            # (generated) Vivado HLS project folders
-│   └── results/                    # (generated) per-kernel JSON pass/fail records
+│   └──hls_output/                  # (generated) 10 HLS C++ files
 │
 ├── tests/
 │   ├── test_vadd.py                # VADD regression suite — mirrors Fall 25 TB output
 │   └── test_kernels.py             # VMAC, linear, relu, fused — 332 test cases total
 │
 ├── reports/
-│   ├── run_hls_windows.ps1         # PowerShell: batch Vitis HLS synthesis (Windows)
-│   ├── run_hls.bat                 # Batch file alternative
-│   ├── run_hls_wsl2.sh             # WSL2 synthesis script
+│   ├── run_hls_windows.ps1         # batch Vitis HLS synthesis (Windows Powershell)
+│   ├── run_hls_wsl2.sh             # batch Vitis HLS synthesis (Linux)
 │   ├── parse_reports.py            # Parses csynth.rpt → Markdown / CSV / JSON table
 │   ├── plot_results.py             # Parses all rpt files → 5 matplotlib figures
-│   ├── spring26_report.tex         # Full LaTeX research report
 │   ├── synth_reports/              # (generated) csynth.rpt per kernel/schedule
 │   │   ├── vadd_baseline/
 │   │   ├── vadd_opt/
@@ -117,7 +113,8 @@ vpu_allo/
 │   │   └── linear_relu_opt/
 │   └── figures/                    # (generated) fig1–fig5 PNGs + synthesis_data.json
 │
-└── run_all.py                      # End-to-end orchestration script
+├── run_2.py                        # runs step 1-3 in quick start (runs in docker env)
+└── run_1.py                        # runs step 4-5 in quick start (runs in powershell)
 ```
 
 ---
@@ -142,24 +139,39 @@ cd /workspace/allo && python3 -m pip install -v -e .
 
 ## Quick Start
 
-### Step 1 — Golden model smoke test *(no Allo or Vivado needed)*
+### Step 1 — Golden model test *(no Allo or Vivado needed)*
 ```bash
 python3 models/golden.py
 ```
-Expected: prints VADD packed words matching Fall 2025 Fig 7
-(`09060300 15120f0c 211e1b18 2d2a2724`).
+Expected: 
+```
+=== VADD_I8 (regression — matches Fall 25 golden) ===
+a: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+b: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+y: [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45]
+  word[0] = 09060300
+  word[1] = 15120f0c
+  word[2] = 211e1b18
+  word[3] = 2d2a2724
 
-### Step 2 — Functional tests via LLVM *(no Vivado needed)*
+...
+=== LINEAR_RELU_I8 (fused) ===
+y (INT8, post-ReLU): [0, 0, 0, 8, 37, 0, 0, 0]
+```
+
+### Step 2 — Functional tests via LLVM *(no Vivado needed, in Docker)*
 ```bash
 python3 -m pytest tests/ -v
 ```
 Expected: `32 passed` in ~4 seconds.
 
-### Step 3 — Generate HLS C++ *(no Vivado needed)*
+### Step 3 — Generate HLS C++ *(no Vivado needed, in Docker)*
 ```bash
 python3 sim/generate_hls.py --hls-only
 # Writes: sim/hls_output/<kernel>_<schedule>.cpp  (10 files)
 ```
+Expected:
+cpp files generates as seen in [sim/hls_output](sim/hls_output/)
 
 ### Step 4 — Run Vitis HLS synthesis *(requires Vitis HLS 2025.1)*
 
@@ -181,6 +193,8 @@ Expected output (one block per kernel):
 
 Reports saved to `reports/synth_reports/<kernel>/csynth.rpt`.
 
+Example: [reports/synth_reports/linear_opt/csynth.rpt](reports/synth_reports/linear_opt/csynth.rpt)
+
 ### Step 5 — Parse results and generate figures
 ```bash
 python3 reports/plot_results.py \
@@ -188,7 +202,7 @@ python3 reports/plot_results.py \
     --out-dir    reports/figures/
 ```
 
-Writes 5 PNG figures and `synthesis_data.json` to `reports/figures/`.
+Writes 5 PNG figures and `synthesis_data.json` to [reports/figures/](reports/figures/).
 
 ---
 
